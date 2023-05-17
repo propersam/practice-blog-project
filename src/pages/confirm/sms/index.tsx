@@ -1,9 +1,9 @@
 import AuthLayoutComponent from "@/components/layouts/AuthLayout";
 import { useAuth } from "@/hooks/useAuth";
 import dynamic from "next/dynamic";
-import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ReactFragment, useState } from "react";
+
 
 export default function SmsConfirmation() {
   const router = useRouter();
@@ -26,18 +26,17 @@ export default function SmsConfirmation() {
     }
   };
 
-  return (
-    <>
-      <Head>
-        <meta charSet="UTF-8" />
-        <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title> Sms Confirmation Page </title>
-        <link href="/favicon.ico" rel="icon" />
-      </Head>
-      <AuthLayoutComponent>
-        <SmsConfirmationPage loading={isLoading} onSubmit={onSubmit} stage={stage} />
-      </AuthLayoutComponent>
-    </>
-  );
+  return <SmsConfirmationPage loading={isLoading} onSubmit={onSubmit} stage={stage} />
 }
+
+SmsConfirmation.getLayout = (page: ReactFragment) => (
+  <AuthLayoutComponent
+    meta={{
+      description: "",
+      icon: "",
+      title: "SMS-Verification",
+    }}
+  >
+    {page}
+  </AuthLayoutComponent>
+);

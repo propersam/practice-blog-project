@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   // main actions now comes in next below
   // GET /api/posts/:id
   if (req.method === "GET") {
-    const postId = String(req?.query?.id)
+    const postId = String(req?.query?.id);
 
     const post = await prisma.post.findUnique({
       where: {
@@ -37,13 +37,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         status: "error",
         data: null,
       });
-    
+
     res.status(200).json({
       message: "Post Detail Fetched",
       status: "success",
       data: post,
     });
-    
   } else {
     res.status(424).json({
       status: "error",

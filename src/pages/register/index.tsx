@@ -3,8 +3,9 @@ import AuthLayoutComponent from "@/components/layouts/AuthLayout";
 import { useAuth } from "@/hooks/useAuth";
 // import { useFetchCities } from "@/hooks/useDataFetch";
 import { RegistrationFields } from "@/types";
-import Head from "next/head";
 import { useRouter } from "next/router";
+import { ReactFragment } from "react";
+
 
 export default function Register() {
   const router = useRouter();
@@ -19,18 +20,17 @@ export default function Register() {
     });
   };
 
-  return (
-    <>
-      <Head>
-        <meta charSet="UTF-8" />
-        <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>Sign Up Page</title>
-        <link href="/favicon.ico" rel="icon" />
-      </Head>
-      <AuthLayoutComponent>
-        <RegisterComponent cities={cities} loading={isLoading} onSubmit={onSubmit} />
-      </AuthLayoutComponent>
-    </>
-  );
+  return <RegisterComponent cities={cities} loading={isLoading} onSubmit={onSubmit} />
 }
+
+Register.getLayout = (page: ReactFragment) => (
+  <AuthLayoutComponent
+    meta={{
+      description: "",
+      icon: "",
+      title: "Sign-Up",
+    }}
+  >
+    {page}
+  </AuthLayoutComponent>
+);

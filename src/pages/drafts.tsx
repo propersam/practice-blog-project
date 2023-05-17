@@ -1,31 +1,22 @@
 /* eslint-disable react/no-unknown-property */
-import Layout from "@/components/layouts/MainLayout";
-import Post from "@/components/Post";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import MainLayoutComponent from "@/components/layouts/MainLayout";
+import PostComponent from "@/components/Post";
 import { useFetchPosts } from "@/hooks/useDataFetch";
-import React from "react";
+import { Post } from "@/types";
+import React, { ReactFragment } from "react";
+
 
 const Drafts = () => {
   const { posts: drafts } = useFetchPosts("/drafts");
-  const { user: userSession } = useCurrentUser();
-
-  if (!userSession) {
-    return (
-      <Layout>
-        <h1>My Drafts</h1>
-        <div>You need to be authenticated to view this page.</div>
-      </Layout>
-    );
-  }
 
   return (
-    <Layout>
+    <>
       <div className="page">
         <h1>My Drafts</h1>
         <main>
-          {drafts.map((post) => (
+          {(drafts as Post[]).map((post) => (
             <div className="post" key={post.id}>
-              <Post post={post} />
+              <PostComponent post={post} />
             </div>
           ))}
         </main>
@@ -44,8 +35,20 @@ const Drafts = () => {
           margin-top: 2rem;
         }
       `}</style>
-    </Layout>
+    </>
   );
 };
 
 export default Drafts;
+
+Drafts.getLayout = (page: ReactFragment) => (
+  <MainLayoutComponent
+    meta={{
+      description: "",
+      icon: "",
+      title: "Posts-Draft",
+    }}
+  >
+    {page}
+  </MainLayoutComponent>
+);

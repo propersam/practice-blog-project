@@ -1,23 +1,24 @@
 /* eslint-disable react/no-unknown-property */
-import Layout from "@/components/layouts/MainLayout";
-import Post from "@/components/Post";
+import MainLayoutComponent from "@/components/layouts/MainLayout";
+import PostComponent from "@/components/Post";
 import { useFetchPosts } from "@/hooks/useDataFetch";
-import React from "react";
+import { Post } from "@/types";
+import React, { ReactFragment } from "react";
 
 const Blog = () => {
   const { posts, loading } = useFetchPosts();
 
   return (
-    <Layout>
+    <>
       <div className="page">
         <h1>Public Feed</h1>
         <main>
           {loading ? (
             <div className="animate-pulse">Fetching posts...</div>
           ) : (
-            posts.map((post) => (
+            (posts as Post[])?.map((post) => (
               <div className="post" key={post.id}>
-                <Post post={post} />
+                <PostComponent post={post} />
               </div>
             ))
           )}
@@ -37,8 +38,20 @@ const Blog = () => {
           margin-top: 2rem;
         }
       `}</style>
-    </Layout>
+    </>
   );
 };
 
 export default Blog;
+
+Blog.getLayout = (page: ReactFragment) => (
+  <MainLayoutComponent
+    meta={{
+      description: "",
+      icon: "",
+      title: "Blog-Feed",
+    }}
+  >
+    {page}
+  </MainLayoutComponent>
+);

@@ -6,8 +6,9 @@ export type PostProps = {
   id: string;
   title: string;
   author?: {
-    name: string;
-    email: string;
+    id?: string;
+    name?: string;
+    email?: string;
   } | null;
   content: string;
   published: boolean;

@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unknown-property */
 import { postService } from "@/services";
 import Router from "next/router";
-import React, { useState } from "react";
+import React, { ReactFragment, useState } from "react";
 
-import Layout from "../components/layouts/MainLayout";
+import MainLayoutComponent from "../components/layouts/MainLayout";
 
-const Draft: React.FC = () => {
+const Create = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -18,7 +18,7 @@ const Draft: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div>
         <form onSubmit={submitData}>
           <h1>New Draft</h1>
@@ -58,8 +58,20 @@ const Draft: React.FC = () => {
           margin-left: 1rem;
         }
       `}</style>
-    </Layout>
+    </>
   );
 };
 
-export default Draft;
+export default Create;
+
+Create.getLayout = (page: ReactFragment) => (
+  <MainLayoutComponent
+    meta={{
+      description: "",
+      icon: "",
+      title: "Posts-Create",
+    }}
+  >
+    {page}
+  </MainLayoutComponent>
+);

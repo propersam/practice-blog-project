@@ -38,16 +38,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { title, content } = req.body;
     try {
       const { user: userSession } = await getUserSession();
-      const userEmail = String(userSession?.email || '');
+      const userEmail = String(userSession?.email || "");
       const post = await prisma.post.create({
         data: {
           title: title,
           content: content,
-          author: { connect: {email: userEmail}},
+          author: { connect: { email: userEmail } },
         },
         include: {
           author: true,
-        }
+        },
       });
 
       res.json({
@@ -55,13 +55,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         message: "Post Created Successfully",
         data: post,
       });
-    } catch(error) {
+    } catch (error) {
       res.status(424).json({
         status: "error",
         message: `Error creatng post: \n${error}`,
       });
     }
-   
   } else {
     res.status(424).json({
       status: "error",
